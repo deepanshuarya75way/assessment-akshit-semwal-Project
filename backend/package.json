@@ -1,0 +1,42 @@
+{
+  "name": "intership",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
+    "test:api": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/api.test.js --runInBand",
+    "migrate:clear-legacy-reset-tokens": "node scripts/clear-legacy-password-reset-tokens.js",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1086.0",
+    "@supabase/supabase-js": "^2.108.2",
+    "axios": "^1.18.1",
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.10.0",
+    "cors": "^2.8.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.7.2",
+    "multer": "^2.2.0",
+    "nodemailer": "^9.0.1",
+    "nodemon": "^3.1.14",
+    "razorpay": "^2.9.6",
+    "resend": "^6.17.1",
+    "sharp": "^0.35.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "jest": "^30.4.2",
+    "mongodb-memory-server": "^11.2.0",
+    "supertest": "^7.2.2"
+  }
+}
