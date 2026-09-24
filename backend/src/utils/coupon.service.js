@@ -171,7 +171,6 @@ export const calculateCouponDiscount = async ({
 };
 
 export const calculatelocationDiscount = async ({
-  
   userId,
   items = [],
 
@@ -186,7 +185,8 @@ export const calculatelocationDiscount = async ({
   }
 
   const productFilter = { _id: { $in: productIds } };
-  if (targetType === "product") {
+  if (targetType === "product") { 
+    
     productFilter._id = coupon.product_id;
   }
   if (targetType === "category") {
@@ -224,48 +224,18 @@ export const calculatelocationDiscount = async ({
 
   const rawDiscount =
     coupon.discountType === "percentage"
-      ? Math.round((eligibleSubtotal * Number(coupon.discountValue || 0)) / 100)
+      ? Math.round((eligibleSubtotal * Number(10 || 0)) / 100)
       : Number(coupon.discountValue || 0);
   const discount = Math.min(eligibleSubtotal, Math.max(0, rawDiscount));
 
   if (discount <= 0) {
-    throw couponError("Coupon does not provide a valid discount");
+    throw couponError("Not belong to this area");
   } 
 
-  if (redeem) {
-    if (usage) {
-      usage.count = usedCount + 1;
-      usage.lastUsedAt = new Date();
-    } else {
-      coupon.usedBy.push({
-        user: userId,
-        count: 1,
-        lastUsedAt: new Date(),
-      });
-    }
 
-    coupon.usage = coupon.usedBy.length;
-    await coupon.save();
-  }
 
-  return {
-    coupon,
-    couponId: coupon.couponId,
+  return {  
     discount,
-    targetType,
-    productId: targetType === "product" ? String(coupon.product_id) : null,
-    categoryId: targetType === "category" ? String(coupon.category_id) : null,
-    productName:
-      targetType === "all"
-        ? "All Products"
-        : targetType === "category"
-          ? "Selected Category"
-          : eligibleProductNames[0],
-    eligibleProductNames,
-    eligibleQuantity,
-    minPurchaseAmount,
-    eligibleSubtotal,
-    remainingUses: Math.max(0, coupon.maxLimit - usedCount - (redeem ? 1 : 0)),
   };
 };
 

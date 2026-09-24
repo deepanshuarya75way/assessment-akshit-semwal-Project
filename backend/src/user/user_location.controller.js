@@ -42,7 +42,6 @@ export  const discountLocation =  async(req ,res) => {
     const currentadd =  await location()
 
 
-    //  if  both location are  then apply discount on cart
 
  const product = await productModel.find().populate("category_id");
     if (!product) {
